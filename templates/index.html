@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DocMind AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">🧠 DocMind AI</div>
+
+        <button class="new-chat" onclick="newChat()">+ New Chat</button>
+
+        <div class="section">
+            <h4>Chats</h4>
+            <div id="history"></div>
+        </div>
+
+        <div class="section">
+            <h4>Uploaded Documents</h4>
+            <div id="files"></div>
+
+            <select id="fileSelect">
+                <option value="">All Documents</option>
+            </select>
+        </div>
+
+        <div class="user-box">
+            👤 User <br>
+            <small>user@email.com</small>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+
+        <div class="header">
+            <h2 id="chatTitle">New Chat</h2>
+        </div>
+
+        <div id="chat"></div>
+
+        <input type="file" id="fileInput" multiple hidden>
+
+        <form class="input-bar" onsubmit="askQuestion(event)">
+            <button type="button" onclick="uploadClick()">📎</button>
+            <input id="question" placeholder="Ask about your documents..." required>
+            <button>➤</button>
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+let chats = {};
+let currentChat = "chat_" + Date.now();
+
+function getTime() {
+    return new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+}
+
+function uploadClick() {
+    document.getElementById("fileInput").click();
+}
+
+document.getElementById("fileInput").addEventListener("change", async function () {
+
+    let formData = new FormData();
+
+    for (let f of this.files) {
+        formData.append("files", f);
+
+        document.getElementById("files").innerHTML += `
+            <div class="file-item">📄 ${f.name}</div>`;
+
+        let option = document.createElement("option");
+        option.value = f.name;
+        option.text = f.name;
+        document.getElementById("fileSelect").appendChild(option);
+    }
+
+    try {
+        await fetch("/upload", { method: "POST", body: formData });
+        alert("Uploaded & Indexed ✅");
+    } catch {
+        alert("Upload failed ❌");
+    }
+});
+
+function addMessage(sender, text, sources=[]) {
+    if (!chats[currentChat]) chats[currentChat] = [];
+
+    chats[currentChat].push({
+        sender, text, sources, time: getTime()
+    });
+
+    render();
+    renderHistory();
+}
+
+function render() {
+    let chat = document.getElementById("chat");
+    chat.innerHTML = "";
+
+    (chats[currentChat] || []).forEach(m => {
+
+        let sourcesHTML = "";
+
+        if (m.sources.length) {
+            sourcesHTML = `<div class="sources">` +
+                m.sources.map(s =>
+                    `<span>${s.file}</span>
+                     <span>Page ${s.page}</span>`
+                ).join("") +
+                `</div>`;
+        }
+
+        chat.innerHTML += `
+        <div class="msg ${m.sender === "You" ? "user" : "bot"}">
+
+            <img src="${m.sender === "You" ? "/static/user.jpg" : "/static/robot.jpg"}" class="avatar">
+
+            <div class="bubble">
+                ${m.text}
+                ${sourcesHTML}
+                <div class="time">${m.time}</div>
+            </div>
+
+        </div>`;
+    });
+
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function renderHistory() {
+    let historyDiv = document.getElementById("history");
+    historyDiv.innerHTML = "";
+
+    Object.keys(chats).forEach(id => {
+        historyDiv.innerHTML += `
+        <div class="chat-item" onclick="switchChat('${id}')">
+            ${chats[id][0]?.text.substring(0,25) || "New Chat"}
+        </div>`;
+    });
+}
+
+function switchChat(id) {
+    currentChat = id;
+    render();
+}
+
+function newChat() {
+    currentChat = "chat_" + Date.now();
+    document.getElementById("chatTitle").innerText = "New Chat";
+    render();
+}
+
+async function askQuestion(e) {
+    e.preventDefault();
+
+    let q = document.getElementById("question").value;
+    let selectedFile = document.getElementById("fileSelect").value;
+
+    addMessage("You", q);
+
+    let formData = new FormData();
+    formData.append("query", q);
+    formData.append("file_name", selectedFile || "");
+
+    try {
+        let res = await fetch("/ask", { method: "POST", body: formData });
+        let data = await res.json();
+        addMessage("Bot", data.answer, data.sources);
+    } catch {
+        addMessage("Bot", "⚠️ Server error");
+    }
+
+    document.getElementById("question").value = "";
+}
+</script>
+
+</body>
+</html>

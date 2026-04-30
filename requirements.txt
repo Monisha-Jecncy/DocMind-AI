@@ -1,0 +1,17 @@
+<<<<<<< HEAD
+fastapi
+uvicorn
+jinja2
+python-multipart
+langchain
+langchain-community
+chromadb
+sentence-transformers
+pypdf
+=======
+langchain
+langchain-community
+chromadb
+pypdf
+ollama
+>>>>>>> c00500e949e12003887797c07a9ae3d4e7c5d79b
