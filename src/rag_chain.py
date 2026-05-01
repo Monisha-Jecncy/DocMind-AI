@@ -43,11 +43,7 @@ Strict Rules:
 - If the answer is not clearly present, say:
   "Not available in the document."
 
-Answer Style:
-- Be clear, concise, and structured.
-- Use bullet points for lists or classifications.
-- Use exact values (numbers, percentages, dates) from the document.
-- Do NOT include unnecessary explanations.
+
 
 Priority:
 - If multiple related details exist, choose the most relevant and direct answer.
