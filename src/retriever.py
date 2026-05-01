@@ -16,5 +16,4 @@ def get_retriever(file_name=None):
     )
     if file_name:
         return db.as_retriever(search_kwargs={"k": 8, "filter": {"source": file_name}})
-
     return db.as_retriever(search_type="mmr", search_kwargs={"k": 8, "fetch_k": 20})
