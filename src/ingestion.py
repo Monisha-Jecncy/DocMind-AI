@@ -53,11 +53,6 @@ def ingest_documents():
 )
     
     db.persist()
-
-
-   
-
-
     print("✅ ChromaDB created")
 if __name__ == "__main__":
     ingest_documents()
