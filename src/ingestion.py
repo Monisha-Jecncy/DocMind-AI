@@ -51,7 +51,6 @@ def ingest_documents():
     persist_directory="chroma_db",
     client_settings=Settings(anonymized_telemetry=False)
 )
-    
     db.persist()
     print("✅ ChromaDB created")
 if __name__ == "__main__":
