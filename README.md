@@ -28,18 +28,3 @@ AI-powered internal document assistant built using **FastAPI + LangChain + Ollam
 
 ## 📂 Project Structure
 
-```text
-DocMind Enterprise/
-│── app.py
-│── requirements.txt
-│── templates/
-│   └── index.html
-│── static/
-│   └── style.css
-│── src/
-│   ├── ingestion.py
-│   ├── retriever.py
-│   └── rag_chain.py
-│── data/
-│   ├── company_policy.pdf
-│   └── hr_rules.pdf
