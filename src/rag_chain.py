@@ -11,7 +11,7 @@ def ask_bot(query, file_name=None):
         if not docs:
             return {"answer": "No data found", "sources": []}
 
-        # 🔥 ADD THIS BLOCK (re-ranking)
+        
 
         reranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
 
