@@ -20,7 +20,7 @@ AI-powered internal document assistant built using **FastAPI + LangChain + Ollam
 - Python
 - FastAPI
 - LangChain
-- Ollama
+- openai
 - ChromaDB
 - HTML / CSS
 
