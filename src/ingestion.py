@@ -1,13 +1,9 @@
 import os
 import shutil
-import time
 from langchain_community.document_loaders import PyPDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from chromadb.config import Settings
-
-os.environ["ANONYMIZED_TELEMETRY"] = "False"
+from langchain_openai import OpenAIEmbeddings
 
 
 def ingest_documents():
@@ -32,25 +28,20 @@ def ingest_documents():
         print("⚠️ No PDFs found")
         return
 
-    splitter = RecursiveCharacterTextSplitter(chunk_size=300, chunk_overlap=50)
+    splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
 
     chunks = splitter.split_documents(docs)
-    if os.path.exists("chroma_db"):
-        try:
-            shutil.rmtree("chroma_db")
-        except PermissionError:
-            print("⚠️ DB in use, retrying...")
-            time.sleep(2)
-            shutil.rmtree("chroma_db")
 
-    embeddings = HuggingFaceEmbeddings(model_name="all-mpnet-base-v2")
+    # reset DB
+    if os.path.exists("chroma_db"):
+        shutil.rmtree("chroma_db")
+
+    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 
     db = Chroma.from_documents(
-    chunks,
-    embedding=embeddings,
-    persist_directory="chroma_db",
-    client_settings=Settings(anonymized_telemetry=False)
-)
+        chunks, embedding=embeddings, persist_directory="chroma_db"
+    )
+
     db.persist()
     print("✅ ChromaDB created")
 if __name__ == "__main__":

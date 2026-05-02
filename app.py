@@ -1,6 +1,6 @@
 import os
 import shutil
-
+from dotenv import load_dotenv
 from fastapi import FastAPI, UploadFile, File, Form, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -8,7 +8,7 @@ from fastapi.templating import Jinja2Templates
 
 from src.ingestion import ingest_documents
 from src.rag_chain import ask_bot
-
+load_dotenv()
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 STATIC_DIR = os.path.join(BASE_DIR, "static")
@@ -25,7 +25,8 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request=request, name="index.html")
+
 
 
 @app.post("/upload")
