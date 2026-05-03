@@ -46,7 +46,7 @@ async def upload_pdf(files: list[UploadFile] = File(...)):
 
         saved_files.append(file.filename)
 
-    # rebuild DB
+
     ingest_documents()
 
     return {"files": saved_files}
