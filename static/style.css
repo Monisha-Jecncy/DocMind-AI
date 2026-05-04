@@ -10,7 +10,7 @@ body {
     height: 100vh;
 }
 
-/* Sidebar */
+
 .sidebar {
     width: 260px;
     background: rgba(10,15,30,0.95);
@@ -61,7 +61,7 @@ body {
     bottom: 20px;
 }
 
-/* Main */
+
 .main {
     flex: 1;
     display: flex;
@@ -79,7 +79,7 @@ body {
     padding: 20px;
 }
 
-/* Messages */
+
 .msg {
     display: flex;
     margin: 15px 0;
@@ -106,7 +106,7 @@ body {
     background: linear-gradient(135deg, #2563eb, #1e40af);
 }
 
-/* Sources */
+
 .sources span {
     background: rgba(255,255,255,0.1);
     padding: 4px 6px;
@@ -115,14 +115,14 @@ body {
     font-size: 12px;
 }
 
-/* Time */
+
 .time {
     font-size: 11px;
     opacity: 0.6;
     margin-top: 5px;
 }
 
-/* Input */
+
 .input-bar {
     display: flex;
     padding: 10px;
