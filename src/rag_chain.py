@@ -20,7 +20,7 @@ def ask_bot(query, file_name=None):
                 {"file": doc.metadata.get("source"), "page": doc.metadata.get("page")}
             )
 
-        # ✅ FIX: create LLM
+        
         llm = ChatOpenAI(model="gpt-5-nano",temperature=1)
 
         # ✅ FIX: generate response
