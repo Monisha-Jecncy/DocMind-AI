@@ -35,7 +35,7 @@ Question:
 """)
         print("Response:", response)
 
-        # ✅ FIX: extract text
+        
         answer = response.content if hasattr(response, "content") else str(response)
 
         # ✅ FINAL RETURN (VERY IMPORTANT)
