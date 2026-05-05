@@ -38,7 +38,7 @@ Question:
         
         answer = response.content if hasattr(response, "content") else str(response)
 
-        # ✅ FINAL RETURN (VERY IMPORTANT)
+        
         return {"answer": answer, "sources": sources}
 
     except Exception as e:
