@@ -23,7 +23,7 @@ def ask_bot(query, file_name=None):
         
         llm = ChatOpenAI(model="gpt-5-nano",temperature=1)
 
-        # ✅ FIX: generate response
+    
         response = llm.invoke(f"""
 Answer ONLY from context below.
 
