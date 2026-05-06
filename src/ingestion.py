@@ -32,7 +32,7 @@ def ingest_documents():
 
     chunks = splitter.split_documents(docs)
 
-    # reset DB
+    
     if os.path.exists("chroma_db"):
         shutil.rmtree("chroma_db")
 
