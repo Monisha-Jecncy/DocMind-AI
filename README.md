@@ -7,11 +7,11 @@ AI-powered internal document assistant built using **FastAPI + LangChain + Ollam
 ## 📌 Features
 
 ✅ Ask questions from company PDFs  
-✅ Local AI model (Ollama)  
+✅ OpenAI
 ✅ FastAPI Web Interface  
 ✅ Chat History  
 ✅ Secure Offline Processing  
-✅ No OpenAI Billing Needed  
+ 
 
 ---
 
