@@ -1,8 +1,8 @@
 
 
-# 🚀 DocMind Enterprise
+# 🚀 DocMind Enterprise And RAG
 
-AI-powered internal document assistant built using **FastAPI + LangChain + Ollama + ChromaDB**.
+AI-powered internal document assistant built using **FastAPI + LangChain + OpenAI + ChromaDB**.
 
 ## 📌 Features
 
